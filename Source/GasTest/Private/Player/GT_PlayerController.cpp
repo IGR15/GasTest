@@ -24,6 +24,7 @@ void AGT_PlayerController::SetupInputComponent()
 
 	EnhancedInputComponent->BindAction(MoveAction,ETriggerEvent::Triggered,this,&AGT_PlayerController::Move);
 	EnhancedInputComponent->BindAction(LookAction,ETriggerEvent::Triggered,this,&AGT_PlayerController::Look);
+	EnhancedInputComponent->BindAction(PrimaryAction,ETriggerEvent::Started,this,&AGT_PlayerController::Primary);
 
 	
 }
@@ -67,4 +68,9 @@ void AGT_PlayerController::Look(const FInputActionValue& Value)
 	AddYawInput(LookAxisVector.X);
 	AddPitchInput(LookAxisVector.Y);
 
+}
+
+void AGT_PlayerController::Primary()
+{
+	UE_LOG(LogTemp,Warning,TEXT("AGT_PlayerController::Primary"));
 }

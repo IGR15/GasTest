@@ -24,17 +24,23 @@ private:
 	UPROPERTY(EditDefaultsOnly,Category="GT|Input")
 	TArray<TObjectPtr<UInputMappingContext>> InputMappingContexts;
 
-	UPROPERTY(EditDefaultsOnly,Category="GT|Input")
+	UPROPERTY(EditDefaultsOnly,Category="GT|Input|Movement")
 	TObjectPtr<UInputAction>JumpAction;
 
-	UPROPERTY(EditDefaultsOnly,Category="GT|Input")
+	UPROPERTY(EditDefaultsOnly,Category="GT|Input|Movement")
 	TObjectPtr<UInputAction>MoveAction;
 
-	UPROPERTY(EditDefaultsOnly,Category="GT|Input")
+	UPROPERTY(EditDefaultsOnly,Category="GT|Input|Movement")
 	TObjectPtr<UInputAction>LookAction;
+
+	UPROPERTY(EditDefaultsOnly,Category="GT|Input|Abilities")
+	TObjectPtr<UInputAction>PrimaryAction;
+
+	
 
 	void Jump();
 	void StopJumping();
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
+	void Primary();
 };
