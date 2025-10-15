@@ -17,6 +17,10 @@ class GASTEST_API AGT_PlayerCharacter : public AGT_BaseCharacter
 public:
 	AGT_PlayerCharacter();
 
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
 private:
 	UPROPERTY(VisibleAnywhere,Category="camera")
 	TObjectPtr<USpringArmComponent> CameraBoom;

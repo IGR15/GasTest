@@ -3,10 +3,12 @@
 
 #include "GasTest/Public/Characters/GT_PlayerCharacter.h"
 
+#include "AbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Player/GT_PlayerState.h"
 
 
 AGT_PlayerCharacter::AGT_PlayerCharacter()
@@ -36,6 +38,35 @@ AGT_PlayerCharacter::AGT_PlayerCharacter()
 	FollowCamera=CreateDefaultSubobject<UCameraComponent>("FollowCamera");
 	FollowCamera->SetupAttachment(CameraBoom,USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation=false;
+}
+
+UAbilitySystemComponent* AGT_PlayerCharacter::GetAbilitySystemComponent() const
+{
+	AGT_PlayerState* GTPlayerState=Cast<AGT_PlayerState>(GetPlayerState());
+	if (!IsValid(GTPlayerState))return nullptr;
+
+	return GTPlayerState->GetAbilitySystemComponent();
+}
+
+void AGT_PlayerCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (!IsValid(GetAbilitySystemComponent())||!HasAuthority())return;
+
+	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(),this);
+	GiveStartUpAbilities();
+
+	
+}
+
+void AGT_PlayerCharacter::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+
+	if (!IsValid(GetAbilitySystemComponent()))return;
+
+	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(),this);
 }
 
 
