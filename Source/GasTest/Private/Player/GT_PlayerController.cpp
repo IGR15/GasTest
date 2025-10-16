@@ -27,7 +27,8 @@ void AGT_PlayerController::SetupInputComponent()
 
 	EnhancedInputComponent->BindAction(MoveAction,ETriggerEvent::Triggered,this,&AGT_PlayerController::Move);
 	EnhancedInputComponent->BindAction(LookAction,ETriggerEvent::Triggered,this,&AGT_PlayerController::Look);
-	EnhancedInputComponent->BindAction(PrimaryAction,ETriggerEvent::Started,this,&AGT_PlayerController::Primary);
+	
+	EnhancedInputComponent->BindAction(PrimaryAction,ETriggerEvent::Triggered,this,&AGT_PlayerController::Primary);
 	EnhancedInputComponent->BindAction(SecondaryAction,ETriggerEvent::Started,this,&AGT_PlayerController::Secondary);
 	EnhancedInputComponent->BindAction(TertiaryAction,ETriggerEvent::Started,this,&AGT_PlayerController::Tertiary);
 
