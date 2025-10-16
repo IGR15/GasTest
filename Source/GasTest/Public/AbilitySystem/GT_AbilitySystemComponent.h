@@ -15,7 +15,11 @@ class GASTEST_API UGT_AbilitySystemComponent : public UAbilitySystemComponent
 public:
 	UGT_AbilitySystemComponent();
 
-protected:
-	virtual void BeginPlay() override;
+	virtual void OnGiveAbility(FGameplayAbilitySpec& AbilitySpec) override;
+
+	virtual void OnRep_ActivateAbilities() override;
+
+private:
+	void HandleAutoActivateAbilities(const FGameplayAbilitySpec& AbilitySpec);
 
 };
