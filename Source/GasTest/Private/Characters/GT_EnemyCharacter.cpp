@@ -2,14 +2,13 @@
 
 
 #include "Characters/GT_EnemyCharacter.h"
-
-#include "AbilitySystemComponent.h"
+#include "AbilitySystem/GT_AbilitySystemComponent.h"
 
 
 AGT_EnemyCharacter::AGT_EnemyCharacter()
 {
 	PrimaryActorTick.bCanEverTick = false;
-	AbilitySystemComponent=CreateDefaultSubobject<UAbilitySystemComponent>("ability system component");
+	AbilitySystemComponent=CreateDefaultSubobject<UGT_AbilitySystemComponent>("ability system component");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 }
