@@ -7,12 +7,12 @@
 #include "GT_BluePrintLibrary.generated.h"
 
 UENUM(BlueprintType)
-enum class EHitDirection
+enum class EHitDirection : uint8
 {
 	Left,
 	Right,
 	Forward,
-	Backward,
+	Backward
 };
 
 UCLASS()
