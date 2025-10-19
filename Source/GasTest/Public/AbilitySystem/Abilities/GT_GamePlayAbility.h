@@ -16,7 +16,7 @@ class GASTEST_API UGT_GamePlayAbility : public UGameplayAbility
 
 public:
 	//virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
-
+	void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="GT|Debug")
 	bool bDrawDebugs=false;
 };
