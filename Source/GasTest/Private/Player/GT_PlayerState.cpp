@@ -3,6 +3,7 @@
 
 #include "Player/GT_PlayerState.h"
 #include "AbilitySystem/GT_AbilitySystemComponent.h"
+#include "AbilitySystem/GT_AttributeSet.h"
 
 AGT_PlayerState::AGT_PlayerState()
 {
@@ -12,6 +13,8 @@ AGT_PlayerState::AGT_PlayerState()
 
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
+
+	AttributeSet=CreateDefaultSubobject<UGT_AttributeSet>("AttributeSet");
 
 	
 }

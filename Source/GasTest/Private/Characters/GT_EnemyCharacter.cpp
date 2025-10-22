@@ -3,6 +3,7 @@
 
 #include "Characters/GT_EnemyCharacter.h"
 #include "AbilitySystem/GT_AbilitySystemComponent.h"
+#include "AbilitySystem/GT_AttributeSet.h"
 
 
 AGT_EnemyCharacter::AGT_EnemyCharacter()
@@ -11,6 +12,8 @@ AGT_EnemyCharacter::AGT_EnemyCharacter()
 	AbilitySystemComponent=CreateDefaultSubobject<UGT_AbilitySystemComponent>("ability system component");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+
+	AttributeSet=CreateDefaultSubobject<UGT_AttributeSet>("AttributeSet");
 }
 
 UAbilitySystemComponent* AGT_EnemyCharacter::GetAbilitySystemComponent() const
