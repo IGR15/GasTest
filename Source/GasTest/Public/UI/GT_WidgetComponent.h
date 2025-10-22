@@ -11,6 +11,8 @@
 class UGT_AttributeSet;
 class UGT_AbilitySystemComponent;
 class AGT_BaseCharacter;
+class UAbilitySystemComponent;
+class UAttributeSet;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class GASTEST_API UGT_WidgetComponent : public UWidgetComponent
