@@ -17,7 +17,9 @@ void UGT_WidgetComponent::BeginPlay()
 	if (!IsASCInitialized())
 	{
 		BaseCharacter->OnASCInitialized.AddDynamic(this,&ThisClass::OnASCInitialized);
+		return;
 	}
+	InitializeAttributesDelegate();
 	
 }
 
@@ -34,10 +36,31 @@ bool UGT_WidgetComponent::IsASCInitialized()const
 	return AbilitySystemComponent.IsValid()&&AttributeSet.IsValid();
 }
 
+void UGT_WidgetComponent::InitializeAttributesDelegate()
+{
+	if (!AttributeSet->bAttributeInitialized)
+	{
+		AttributeSet->OnAttributeInitializedDelegate.AddDynamic(this,&ThisClass::BindToAttributeChanges);
+	}
+	else
+	{
+		BindToAttributeChanges();
+	}
+}
+
 void UGT_WidgetComponent::OnASCInitialized(UAbilitySystemComponent* ASC, UAttributeSet* AS)
 {
 	AbilitySystemComponent=Cast<UGT_AbilitySystemComponent>(ASC);
 	AttributeSet=Cast<UGT_AttributeSet>(AS);
+
+	if (!IsASCInitialized())return;
+	
+	InitializeAttributesDelegate();
+}
+
+void UGT_WidgetComponent::BindToAttributeChanges()
+{
+	
 }
 
 

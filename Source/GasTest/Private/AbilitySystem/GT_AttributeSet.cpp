@@ -11,6 +11,28 @@ void UGT_AttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty
 	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass,MaxHealth,COND_None,REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass,Mana,COND_None,REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass,MaxMana,COND_None,REPNOTIFY_Always);
+	
+	DOREPLIFETIME(ThisClass,bAttributeInitialized);
+	
+}
+
+void UGT_AttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data)
+{
+	Super::PostGameplayEffectExecute(Data);
+
+	if (!bAttributeInitialized)
+	{
+		bAttributeInitialized=true;
+		OnAttributeInitializedDelegate.Broadcast();
+	}
+}
+
+void UGT_AttributeSet::OnRep_AttributesInitialized()
+{
+	if (bAttributeInitialized)
+	{
+		OnAttributeInitializedDelegate.Broadcast();
+	}
 }
 
 void UGT_AttributeSet::OnRep_Health(const FGameplayAttributeData& OldValue)
