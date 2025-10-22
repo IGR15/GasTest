@@ -21,16 +21,23 @@ UAbilitySystemComponent* AGT_EnemyCharacter::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
+UAttributeSet* AGT_EnemyCharacter::GetAttributeSet() const
+{
+	return AttributeSet;
+}
+
 void AGT_EnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	if(!IsValid(GetAbilitySystemComponent()))return;
 
 	GetAbilitySystemComponent()->InitAbilityActorInfo(this,this);
+	OnASCInitialized.Broadcast(GetAbilitySystemComponent(),GetAttributeSet());
 
 	if (!HasAuthority())return;
 
 	GiveStartUpAbilities();
+	InitializeAttributes();
 	
 }
 

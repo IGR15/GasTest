@@ -48,6 +48,14 @@ UAbilitySystemComponent* AGT_PlayerCharacter::GetAbilitySystemComponent() const
 	return GTPlayerState->GetAbilitySystemComponent();
 }
 
+UAttributeSet* AGT_PlayerCharacter::GetAttributeSet() const
+{
+	AGT_PlayerState* GTPlayerState=Cast<AGT_PlayerState>(GetPlayerState());
+	if (!IsValid(GTPlayerState))return nullptr;
+
+	return GTPlayerState->GetAttributeSet();
+}
+
 void AGT_PlayerCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -55,7 +63,9 @@ void AGT_PlayerCharacter::PossessedBy(AController* NewController)
 	if (!IsValid(GetAbilitySystemComponent())||!HasAuthority())return;
 
 	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(),this);
+	OnASCInitialized.Broadcast(GetAbilitySystemComponent(),GetAttributeSet());
 	GiveStartUpAbilities();
+	InitializeAttributes();
 
 	
 }
@@ -67,6 +77,7 @@ void AGT_PlayerCharacter::OnRep_PlayerState()
 	if (!IsValid(GetAbilitySystemComponent()))return;
 
 	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(),this);
+	OnASCInitialized.Broadcast(GetAbilitySystemComponent(),GetAttributeSet());
 }
 
 

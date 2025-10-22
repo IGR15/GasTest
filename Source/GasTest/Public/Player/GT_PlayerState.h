@@ -18,6 +18,8 @@ public:
 	AGT_PlayerState();
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+	UAttributeSet* GetAttributeSet()const{return AttributeSet;}
 private:
 	UPROPERTY(VisibleAnywhere,Category="GT|Abilities")
 	TObjectPtr<UAbilitySystemComponent>AbilitySystemComponent;
