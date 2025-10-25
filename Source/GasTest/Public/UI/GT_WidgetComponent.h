@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AbilitySystem/GT_AttributeSet.h"
 #include "Components/WidgetComponent.h"
+#include "AttributeSet.h"
 #include "GT_WidgetComponent.generated.h"
 
 
@@ -26,6 +27,8 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere)
+	TMap<FGameplayAttribute,FGameplayAttribute> AttributeMap;
 
 private:
 	TWeakObjectPtr<AGT_BaseCharacter> BaseCharacter;
@@ -35,6 +38,7 @@ private:
 	void InitAbilitySystemData();
 	bool IsASCInitialized()const;
 	void InitializeAttributesDelegate();
+	void BindWidgetToAttributeChanges(UWidget* WidgetObject,const TTuple<FGameplayAttribute,FGameplayAttribute>& Pair)const;
 
 	UFUNCTION()
 	void OnASCInitialized(UAbilitySystemComponent* ASC,UAttributeSet* AS);

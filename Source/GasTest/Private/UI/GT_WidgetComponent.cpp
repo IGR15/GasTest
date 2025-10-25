@@ -5,7 +5,9 @@
 
 #include "AbilitySystem/GT_AbilitySystemComponent.h"
 #include "AbilitySystem/GT_AttributeSet.h"
+#include "Blueprint/WidgetTree.h"
 #include "Characters/GT_BaseCharacter.h"
+#include "UI/GT_AttributeWidget.h"
 
 
 // Called when the game starts
@@ -48,6 +50,8 @@ void UGT_WidgetComponent::InitializeAttributesDelegate()
 	}
 }
 
+
+
 void UGT_WidgetComponent::OnASCInitialized(UAbilitySystemComponent* ASC, UAttributeSet* AS)
 {
 	AbilitySystemComponent=Cast<UGT_AbilitySystemComponent>(ASC);
@@ -60,7 +64,30 @@ void UGT_WidgetComponent::OnASCInitialized(UAbilitySystemComponent* ASC, UAttrib
 
 void UGT_WidgetComponent::BindToAttributeChanges()
 {
+	for (const TTuple<FGameplayAttribute,FGameplayAttribute>& Pair : AttributeMap)
+	{
+		BindWidgetToAttributeChanges(GetUserWidgetObject(),Pair);// fof checking the owned Widget Object
+		GetUserWidgetObject()->WidgetTree->ForEachWidget([this,&Pair](UWidget* ChildWidget)
+		{
+			BindWidgetToAttributeChanges(ChildWidget,Pair);
+		});
+	}
 	
+}
+void UGT_WidgetComponent::BindWidgetToAttributeChanges(UWidget* WidgetObject,
+	const TTuple<FGameplayAttribute, FGameplayAttribute>& Pair) const
+{
+	UGT_AttributeWidget* AttributeWidget =Cast<UGT_AttributeWidget>(WidgetObject);
+	if (!IsValid(AttributeWidget))return;
+	if (!AttributeWidget->MatchesAttribute(Pair))return;
+
+	AttributeWidget->OnAttributeChange(Pair,AttributeSet.Get());
+
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Pair.Key).AddLambda([this,AttributeWidget,&Pair](const FOnAttributeChangeData& AttributeChangeData)
+	{
+		AttributeWidget->OnAttributeChange(Pair,AttributeSet.Get());
+
+	});
 }
 
 
